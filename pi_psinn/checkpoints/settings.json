@@ -1,0 +1,29 @@
+{
+ "network": "psinn",
+ "inputs": [
+  "t",
+  "x"
+ ],
+ "input_transform": "none",
+ "matrices": {
+  "fc1_1": 2,
+  "fc1_3": 2,
+  "fc2_1": 2,
+  "fc2_3": 2,
+  "fc2_2": 2,
+  "fc3_1": 2,
+  "fc3_2": 1,
+  "fc4_1": 1
+ },
+ "orders": {
+  "t": 1,
+  "x": 2
+ },
+ "track_cast": "FP16",
+ "columns": [
+  "u",
+  "u_t",
+  "u_x",
+  "u_xx"
+ ]
+}

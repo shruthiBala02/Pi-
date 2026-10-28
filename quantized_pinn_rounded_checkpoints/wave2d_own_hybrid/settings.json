@@ -1,0 +1,126 @@
+{
+ "equation": "wave2d_own_hybrid",
+ "inputs": [
+  "x",
+  "y",
+  "t"
+ ],
+ "outputs": [
+  "u"
+ ],
+ "layers": [
+  3,
+  40,
+  40,
+  40,
+  40,
+  40,
+  40,
+  40,
+  1
+ ],
+ "activation": "tanh",
+ "input_transform": {
+  "kind": "minmax",
+  "lb": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "ub": [
+   1.0,
+   1.0,
+   1.0
+  ]
+ },
+ "columns": [
+  {
+   "name": "u",
+   "out": 0,
+   "coord": 0,
+   "order": 0
+  },
+  {
+   "name": "u_t",
+   "out": 0,
+   "coord": 2,
+   "order": 1
+  },
+  {
+   "name": "u_tt",
+   "out": 0,
+   "coord": 2,
+   "order": 2
+  },
+  {
+   "name": "u_x",
+   "out": 0,
+   "coord": 0,
+   "order": 1
+  },
+  {
+   "name": "u_xx",
+   "out": 0,
+   "coord": 0,
+   "order": 2
+  },
+  {
+   "name": "u_y",
+   "out": 0,
+   "coord": 1,
+   "order": 1
+  },
+  {
+   "name": "u_yy",
+   "out": 0,
+   "coord": 1,
+   "order": 2
+  }
+ ],
+ "no_reference": {},
+ "format": "INT8",
+ "track_cast": "FP16",
+ "deciding_metric": "rel_l2",
+ "median_deciding_value": 0.013624901415241059,
+ "export_device": "cuda",
+ "units": "network units (inputs and outputs as the network sees them)",
+ "seeds": [
+  0,
+  12,
+  18,
+  19,
+  23
+ ],
+ "seed_info": [
+  {
+   "seed": 0,
+   "run_id": "20261006-170932-4",
+   "deciding_value": 0.013273076576988169,
+   "distance_to_median": 0.00035182483825288956
+  },
+  {
+   "seed": 12,
+   "run_id": "20261006-170933-2",
+   "deciding_value": 0.013386034292960387,
+   "distance_to_median": 0.00023886712228067195
+  },
+  {
+   "seed": 18,
+   "run_id": "20261006-170933-8",
+   "deciding_value": 0.013544068231349952,
+   "distance_to_median": 8.083318389110611e-05
+  },
+  {
+   "seed": 19,
+   "run_id": "20261006-170933-9",
+   "deciding_value": 0.013786522553222,
+   "distance_to_median": 0.0001616211379809416
+  },
+  {
+   "seed": 23,
+   "run_id": "20261006-170933-13",
+   "deciding_value": 0.013705734599132165,
+   "distance_to_median": 8.083318389110611e-05
+  }
+ ]
+}

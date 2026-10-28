@@ -1,0 +1,110 @@
+{
+ "equation": "nls_raissi",
+ "inputs": [
+  "x",
+  "t"
+ ],
+ "outputs": [
+  "u",
+  "v"
+ ],
+ "layers": [
+  2,
+  100,
+  100,
+  100,
+  100,
+  2
+ ],
+ "activation": "tanh",
+ "input_transform": {
+  "kind": "scale_pm1",
+  "lb": [
+   -5.0,
+   0.0
+  ],
+  "ub": [
+   5.0,
+   1.5707963267948966
+  ],
+  "eps": 0.0
+ },
+ "columns": [
+  {
+   "name": "u",
+   "out": 0,
+   "coord": 0,
+   "order": 0
+  },
+  {
+   "name": "v",
+   "out": 1,
+   "coord": 0,
+   "order": 0
+  },
+  {
+   "name": "u_x",
+   "out": 0,
+   "coord": 0,
+   "order": 1
+  },
+  {
+   "name": "v_x",
+   "out": 1,
+   "coord": 0,
+   "order": 1
+  }
+ ],
+ "no_reference": {
+  "abs_h": "not a pure derivative (norm of other columns): not scored on the Pi",
+  "u_t": "reference identically 0 (max |ref| <= 1e-12): relative error undefined",
+  "v_t": "reference identically 0 (max |ref| <= 1e-12): relative error undefined",
+  "u_xx": "reference identically 0 (max |ref| <= 1e-12): relative error undefined",
+  "v_xx": "reference identically 0 (max |ref| <= 1e-12): relative error undefined"
+ },
+ "format": "INT8",
+ "track_cast": "FP16",
+ "deciding_metric": "rel_l2_modulus",
+ "median_deciding_value": 0.0010886386469916613,
+ "export_device": "cuda",
+ "units": "network units (inputs and outputs as the network sees them)",
+ "seeds": [
+  2,
+  3,
+  18,
+  22,
+  29
+ ],
+ "seed_info": [
+  {
+   "seed": 2,
+   "run_id": "20261006-171000",
+   "deciding_value": 0.0010860373093886978,
+   "distance_to_median": 2.601337602963459e-06
+  },
+  {
+   "seed": 3,
+   "run_id": "20261006-171000-2",
+   "deciding_value": 0.001072880512116844,
+   "distance_to_median": 1.575813487481731e-05
+  },
+  {
+   "seed": 18,
+   "run_id": "20261006-171001-3",
+   "deciding_value": 0.0010803278503020916,
+   "distance_to_median": 8.310796689569655e-06
+  },
+  {
+   "seed": 22,
+   "run_id": "20261006-171001-7",
+   "deciding_value": 0.001073660364731313,
+   "distance_to_median": 1.497828226034825e-05
+  },
+  {
+   "seed": 29,
+   "run_id": "20261006-171001-14",
+   "deciding_value": 0.0010912399845946247,
+   "distance_to_median": 2.601337602963459e-06
+  }
+ ]
+}

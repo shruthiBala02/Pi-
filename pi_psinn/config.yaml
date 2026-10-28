@@ -1,0 +1,18 @@
+# the pi: block of code/configs/exp21-psinn-pi5-deployment.yaml (a desktop test checks they are equal)
+checkpoints: {J: n1_q1.pt, G: n1_q2.pt}
+empty_checkpoint: n1_q1.pt
+track_cast: FP16
+orders: {t: 1, x: 2}
+threads: 4
+warmup_runs: 5
+timed_runs: 30
+batch_sizes: [1, 64, 1024]
+accuracy_chunk: 1024
+repeats: 3
+order:
+  - {arm: none, stages: [empty]}
+  - {arm: J, stages: [accuracy, b1, b64, b1024]}
+  - {arm: G, stages: [accuracy, b1, b64, b1024]}
+thermal_interval_s: 0.5
+checkpoint_dir: checkpoints
+results_dir: results

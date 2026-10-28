@@ -1,0 +1,103 @@
+{
+ "equation": "helmholtz_44_acrpinn",
+ "inputs": [
+  "x",
+  "y"
+ ],
+ "outputs": [
+  "u"
+ ],
+ "layers": [
+  2,
+  50,
+  50,
+  50,
+  50,
+  1
+ ],
+ "activation": "tanh",
+ "input_transform": {
+  "kind": "none"
+ },
+ "columns": [
+  {
+   "name": "u",
+   "out": 0,
+   "coord": 0,
+   "order": 0
+  },
+  {
+   "name": "u_x",
+   "out": 0,
+   "coord": 0,
+   "order": 1
+  },
+  {
+   "name": "u_y",
+   "out": 0,
+   "coord": 1,
+   "order": 1
+  },
+  {
+   "name": "u_xx",
+   "out": 0,
+   "coord": 0,
+   "order": 2
+  },
+  {
+   "name": "u_yy",
+   "out": 0,
+   "coord": 1,
+   "order": 2
+  }
+ ],
+ "no_reference": {
+  "lap_u": "not a pure derivative (sum of other columns): not scored on the Pi",
+  "grad_u": "not a pure derivative (norm of other columns): not scored on the Pi"
+ },
+ "format": "INT8",
+ "track_cast": "FP16",
+ "deciding_metric": "rel_l2",
+ "median_deciding_value": 0.10391394049973554,
+ "export_device": "cuda",
+ "units": "network units (inputs and outputs as the network sees them)",
+ "seeds": [
+  7,
+  10,
+  15,
+  18,
+  22
+ ],
+ "seed_info": [
+  {
+   "seed": 7,
+   "run_id": "20261006-171022-6",
+   "deciding_value": 0.10441813873169677,
+   "distance_to_median": 0.0005041982319612254
+  },
+  {
+   "seed": 10,
+   "run_id": "20261006-171022-9",
+   "deciding_value": 0.09961287717095405,
+   "distance_to_median": 0.004301063328781496
+  },
+  {
+   "seed": 15,
+   "run_id": "20261006-171023",
+   "deciding_value": 0.10748893838249257,
+   "distance_to_median": 0.0035749978827570306
+  },
+  {
+   "seed": 18,
+   "run_id": "20261006-171023-4",
+   "deciding_value": 0.10340974226777432,
+   "distance_to_median": 0.0005041982319612254
+  },
+  {
+   "seed": 22,
+   "run_id": "20261006-171023-8",
+   "deciding_value": 0.10210364056909232,
+   "distance_to_median": 0.0018102999306432166
+  }
+ ]
+}
