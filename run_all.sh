@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # exp18: the 33 equations not yet run on this machine, one after another, each by its own run.sh (5 seeds x arms B, C and the probe's D/E, then summarize.py).
-# Run from anywhere: bash run_all_new.sh       (needs probe_result.json: python probe_int8.py first)
+# Run from anywhere: bash run_all.sh           (needs probe_result.json: python probe_int8.py first)
 # An equation whose <equation>_results/<equation>_summary.csv exists is skipped, so a re-run resumes where it stopped.
 # A failed equation is reported and the next one starts; the list of failures is printed at the end.
 # Jurj's Ψ-NN has its own run: bash quantized_pinn_rounded_checkpoints/jurej/run.sh
