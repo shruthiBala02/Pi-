@@ -1,0 +1,338 @@
+{
+ "equation": "burgers_own",
+ "seed": 5,
+ "base_file": "seed05_da_adaround.pt",
+ "base_file_sha256": "e08bd9332758e50dc949a6eabaae1604372949fcc83890933905b2a8d3b63533",
+ "quant": {
+  "mx_block": 32,
+  "nvfp4_block": 16,
+  "min_scale": 1e-12,
+  "observer_momentum": 0.9
+ },
+ "rows": [
+  {
+   "part": "base",
+   "format": "INT8",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__base__INT8.pt",
+   "sha256": "d1b9479b085cecc844f49375dad4f4754d43fbcd5ba7939e0259c53dcf756f8b"
+  },
+  {
+   "part": "fp32",
+   "format": "FP32",
+   "weight_format": "FP32",
+   "act_format": "FP32",
+   "track_format": "FP32",
+   "file": "burgers_own__fp32__FP32.pt",
+   "sha256": "2924b19fdcb10b5e0dbf3bbc4d4cb35af6e4a6e67f53014edef3400dcb145bdd"
+  },
+  {
+   "part": "a1",
+   "format": "INT32",
+   "weight_format": "INT32",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__INT32.pt",
+   "sha256": "952df34d54c927a9dfcc2b2b6b2e5d267764a4dc18ff9fbcb92d0e034e06ab2b"
+  },
+  {
+   "part": "a1",
+   "format": "INT16",
+   "weight_format": "INT16",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__INT16.pt",
+   "sha256": "f51668c832a5501d696a05316288758ce68dbd23bc6e0d2e3c3954c5a3a56530"
+  },
+  {
+   "part": "a1",
+   "format": "FP16",
+   "weight_format": "FP16",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__FP16.pt",
+   "sha256": "f99482710c3ed19fdb4735f1bbe3626d08f1775dc49fc333bf7559d9c411568a"
+  },
+  {
+   "part": "a1",
+   "format": "BF16",
+   "weight_format": "BF16",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__BF16.pt",
+   "sha256": "aaf0165f2dc87bd0467ea757fd50ea567e39b86d62b3cbd2a3020c959f38739a"
+  },
+  {
+   "part": "a1",
+   "format": "FP8-E4M3",
+   "weight_format": "FP8-E4M3",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__FP8-E4M3.pt",
+   "sha256": "2ee6b43fb8bad487bd3a413251778d22a8a6e3b3f63c461f63846d8f38fd86d1"
+  },
+  {
+   "part": "a1",
+   "format": "FP8-E5M2",
+   "weight_format": "FP8-E5M2",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__FP8-E5M2.pt",
+   "sha256": "c140ae42b4a12006ff88eaf827c990ce16fa3bcc4aa60a1e135769416f2dad22"
+  },
+  {
+   "part": "a1",
+   "format": "MXFP8",
+   "weight_format": "MXFP8",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__MXFP8.pt",
+   "sha256": "c2adaaa414293087abe2fb632015c3b36a37f6282c6bb20b68e63a6bc99f57c7"
+  },
+  {
+   "part": "a1",
+   "format": "FP6-E2M3",
+   "weight_format": "FP6-E2M3",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__FP6-E2M3.pt",
+   "sha256": "7e94b58e45931fd78f27185d81773c113b68e79683358c26400734ba0de3dc49"
+  },
+  {
+   "part": "a1",
+   "format": "FP6-E3M2",
+   "weight_format": "FP6-E3M2",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__FP6-E3M2.pt",
+   "sha256": "e1d659da92f3d9cbedba91d6365332c48aed9645265fea80eb3f0893e5088cc1"
+  },
+  {
+   "part": "a1",
+   "format": "MXFP6",
+   "weight_format": "MXFP6",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__MXFP6.pt",
+   "sha256": "bfd96328ec4cfb6ba2c7974e4c90bd7e6a7834555303a38b724a1edbd6825ed6"
+  },
+  {
+   "part": "a1",
+   "format": "INT4",
+   "weight_format": "INT4",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__INT4.pt",
+   "sha256": "1cc3e5d3f16e24c658d7ed4a76dfcfb81eb04d126c17bf4f0e98a2244e6c67a7"
+  },
+  {
+   "part": "a1",
+   "format": "FP4-E2M1",
+   "weight_format": "FP4-E2M1",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__FP4-E2M1.pt",
+   "sha256": "904e1bf25b1208b0d7bacfbb6cdcd795d4faab53c223cd3aee953bbcea54c3ee"
+  },
+  {
+   "part": "a1",
+   "format": "MXFP4",
+   "weight_format": "MXFP4",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__MXFP4.pt",
+   "sha256": "919d0d439582b89a67d08990d4569f8d9ded20b0d03f49c0c435a3f757686b4e"
+  },
+  {
+   "part": "a1",
+   "format": "NVFP4",
+   "weight_format": "NVFP4",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "burgers_own__a1__NVFP4.pt",
+   "sha256": "4632cbf20d269059f10728daa85750d9358fa5ec15ea2c99e8e3877867ca7f01"
+  },
+  {
+   "part": "a2",
+   "format": "INT32",
+   "weight_format": "INT32",
+   "act_format": "INT32",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__INT32.pt",
+   "sha256": "d75508020071f1ae10f5bf4b06eadaf11161effccf9ab9c396858666357e2f6c"
+  },
+  {
+   "part": "a2",
+   "format": "INT16",
+   "weight_format": "INT16",
+   "act_format": "INT16",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__INT16.pt",
+   "sha256": "74ffcfcfb3e1d254fd1355a8fa790e78349b86292c81c9e2c3fd1ba8c3496c6e"
+  },
+  {
+   "part": "a2",
+   "format": "FP16",
+   "weight_format": "FP16",
+   "act_format": "FP16",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__FP16.pt",
+   "sha256": "c4f69d4bea02831932e1f80330d6ecb6b918bce74a7b79a6f7c4d10d918efe84"
+  },
+  {
+   "part": "a2",
+   "format": "BF16",
+   "weight_format": "BF16",
+   "act_format": "BF16",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__BF16.pt",
+   "sha256": "60eea840f2974151afabb8b1ca0571f33f3d3d8759fa62143faef0bb4bc4533f"
+  },
+  {
+   "part": "a2",
+   "format": "FP8-E4M3",
+   "weight_format": "FP8-E4M3",
+   "act_format": "FP8-E4M3",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__FP8-E4M3.pt",
+   "sha256": "3ae6d21313f68c6d0a7eb38d589040518b0ef883461183930d7e1cd077118036"
+  },
+  {
+   "part": "a2",
+   "format": "FP8-E5M2",
+   "weight_format": "FP8-E5M2",
+   "act_format": "FP8-E5M2",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__FP8-E5M2.pt",
+   "sha256": "1c2ced507b3b99538c4170d19f7235ee9b0e268b9b44c531e1101af3ccb958ad"
+  },
+  {
+   "part": "a2",
+   "format": "MXFP8",
+   "weight_format": "MXFP8",
+   "act_format": "MXFP8",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__MXFP8.pt",
+   "sha256": "392d5eb5c25eda6aee23df886c0112f7aa744e45fe0fb2fb7fa529a2e74e0e5f"
+  },
+  {
+   "part": "a2",
+   "format": "FP6-E2M3",
+   "weight_format": "FP6-E2M3",
+   "act_format": "FP6-E2M3",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__FP6-E2M3.pt",
+   "sha256": "b8d6223f6ef5f61b3a41a7c9182c812931533379e6fa13e93f0ac137dd496ebe"
+  },
+  {
+   "part": "a2",
+   "format": "FP6-E3M2",
+   "weight_format": "FP6-E3M2",
+   "act_format": "FP6-E3M2",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__FP6-E3M2.pt",
+   "sha256": "61c1c455fc29468c1fcc86fd70c64a29df0f1c8261cd8e58991995fe90f74895"
+  },
+  {
+   "part": "a2",
+   "format": "MXFP6",
+   "weight_format": "MXFP6",
+   "act_format": "MXFP6",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__MXFP6.pt",
+   "sha256": "dc8a9510902e0a36774793a7fcdaadff25fbcc3f09556eb31fc1aba9789764dc"
+  },
+  {
+   "part": "a2",
+   "format": "INT4",
+   "weight_format": "INT4",
+   "act_format": "INT4",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__INT4.pt",
+   "sha256": "45d43ef099bb3d630980b85146aff74622d4ecf54d7dc41645817ae5c9ced30f"
+  },
+  {
+   "part": "a2",
+   "format": "FP4-E2M1",
+   "weight_format": "FP4-E2M1",
+   "act_format": "FP4-E2M1",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__FP4-E2M1.pt",
+   "sha256": "eef75ea9b7c7fc0d771f4fc4844e5405672786834645b0281a1a509c0d4b9938"
+  },
+  {
+   "part": "a2",
+   "format": "MXFP4",
+   "weight_format": "MXFP4",
+   "act_format": "MXFP4",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__MXFP4.pt",
+   "sha256": "843041f04638dbd3889c2f105d872c60ad8747f1a03f5f56042f6315f1198900"
+  },
+  {
+   "part": "a2",
+   "format": "NVFP4",
+   "weight_format": "NVFP4",
+   "act_format": "NVFP4",
+   "track_format": "FP16",
+   "file": "burgers_own__a2__NVFP4.pt",
+   "sha256": "e674307058d9839f71bb988cd328ff1dac0363b6687d473d2f15298812407cf4"
+  },
+  {
+   "part": "b",
+   "format": "INT32",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "INT32",
+   "file": "burgers_own__b__INT32.pt",
+   "sha256": "b2c23555f0fa8d6c60c8ff962aa0c49e28149ae36378633df7de5048b290c78a"
+  },
+  {
+   "part": "b",
+   "format": "INT16",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "INT16",
+   "file": "burgers_own__b__INT16.pt",
+   "sha256": "598d2ce0e09a74381bba1f4dd75c889ce2c614ef3a1aadc0e72726890bd0bee0"
+  },
+  {
+   "part": "b",
+   "format": "FP8-E4M3",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "FP8-E4M3",
+   "file": "burgers_own__b__FP8-E4M3.pt",
+   "sha256": "d3bc8c57976f8b9ea7194ed71ffaa6f7b5ff5e0b7d5e665930a362d82648832c"
+  },
+  {
+   "part": "b",
+   "format": "FP8-E5M2",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "FP8-E5M2",
+   "file": "burgers_own__b__FP8-E5M2.pt",
+   "sha256": "7d2fd3075609273ce64ecb62b7f143377c946cbdf0544036564c0008c075148f"
+  },
+  {
+   "part": "b",
+   "format": "INT4",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "INT4",
+   "file": "burgers_own__b__INT4.pt",
+   "sha256": "127f1af054e0114c71da0926b66fc61765eee92fdb6d3792912bec47e9127ad7"
+  },
+  {
+   "part": "b",
+   "format": "FP4-E2M1",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "FP4-E2M1",
+   "file": "burgers_own__b__FP4-E2M1.pt",
+   "sha256": "e953790fa1720964c8b5d9a39ceb4c0e934414f3d0bd14a6209eb9f80b41258d"
+  }
+ ]
+}

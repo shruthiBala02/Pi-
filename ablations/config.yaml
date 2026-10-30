@@ -1,4 +1,4 @@
-# mirrors the pi: block of code/configs/exp17-pi5-deployment.yaml (a desktop test checks they are equal)
+# mirrors the pi: block of code/configs/exp25-format-ablations.yaml (a desktop test checks they are equal)
 threads: 4
 warmup_runs: 5
 timed_runs: 30
@@ -8,7 +8,19 @@ batch_sizes:
 - 1024
 accuracy_chunk: 1024
 thermal_interval_s: 0.5
-int8_max: 127
+energy_idle_s: 10
+energy_window_s: 10
+energy_min_passes: 10
+energy_repeats: 5
+power_interval_s: 0.0
+fp16_probe_rtol: 0.0009765625
+throttle_repeats: 1
 probe_file: probe_result.json
-results_suffix: _results
-checkpoint_dir: quantized_pinn_rounded_checkpoints
+probe_power_reads: 50
+probe_timing_repeats: 20
+probe_speed_shape:
+- 1024
+- 64
+- 64
+probe_seed: 0
+results_dir: results

@@ -1,0 +1,338 @@
+{
+ "equation": "kovasznay_hayford",
+ "seed": 20,
+ "base_file": "seed20_da_adaround.pt",
+ "base_file_sha256": "d94877ee3dfbd0cb866b35cddb746522ab2031f8dc29e4cc6a73e6a04fbd0766",
+ "quant": {
+  "mx_block": 32,
+  "nvfp4_block": 16,
+  "min_scale": 1e-12,
+  "observer_momentum": 0.9
+ },
+ "rows": [
+  {
+   "part": "base",
+   "format": "INT8",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__base__INT8.pt",
+   "sha256": "b8dad9bfa92039383b3dd10f62309aaf0c0c361053ef5568406026921145b1b8"
+  },
+  {
+   "part": "fp32",
+   "format": "FP32",
+   "weight_format": "FP32",
+   "act_format": "FP32",
+   "track_format": "FP32",
+   "file": "kovasznay_hayford__fp32__FP32.pt",
+   "sha256": "cc5c69e9244660da1863c27f8c559302bcb047619e113450bc7a994a0b17d4a2"
+  },
+  {
+   "part": "a1",
+   "format": "INT32",
+   "weight_format": "INT32",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__INT32.pt",
+   "sha256": "a9188a1ed0cdf0f6434647f2248f03e0a27b6a0f3b985e8837c18c6ebfb33a66"
+  },
+  {
+   "part": "a1",
+   "format": "INT16",
+   "weight_format": "INT16",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__INT16.pt",
+   "sha256": "96243e731bf5ed69f4cc301f7e294d868a40489c3e80792720f94c275e995bcb"
+  },
+  {
+   "part": "a1",
+   "format": "FP16",
+   "weight_format": "FP16",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__FP16.pt",
+   "sha256": "2718e4dfaf915f00db2f55acb2a5071d06e8a6633427745ce9a3da3216a8d208"
+  },
+  {
+   "part": "a1",
+   "format": "BF16",
+   "weight_format": "BF16",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__BF16.pt",
+   "sha256": "d843cb576f7cef566ca42b7d5e4fac11a32f018605e150e0fb53b40b6e3c46e0"
+  },
+  {
+   "part": "a1",
+   "format": "FP8-E4M3",
+   "weight_format": "FP8-E4M3",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__FP8-E4M3.pt",
+   "sha256": "29a9768d18e82841681ae50a4e62b6d2d0c853ca2adae5287e1e74ffddca69a7"
+  },
+  {
+   "part": "a1",
+   "format": "FP8-E5M2",
+   "weight_format": "FP8-E5M2",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__FP8-E5M2.pt",
+   "sha256": "7088001d66319e63519d34b5b6f3c85f0f7124c8d5df5ce34296a33c22b3736e"
+  },
+  {
+   "part": "a1",
+   "format": "MXFP8",
+   "weight_format": "MXFP8",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__MXFP8.pt",
+   "sha256": "695bd9b14e8e70b8bdb3a7a386bd3534fca7879c45c1dff088585537a080688d"
+  },
+  {
+   "part": "a1",
+   "format": "FP6-E2M3",
+   "weight_format": "FP6-E2M3",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__FP6-E2M3.pt",
+   "sha256": "7da54c5fc96d2932414ca182ce32219b19c5742da8c1ac731a6e52aa0bcdf250"
+  },
+  {
+   "part": "a1",
+   "format": "FP6-E3M2",
+   "weight_format": "FP6-E3M2",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__FP6-E3M2.pt",
+   "sha256": "dd3d8e6cbb41dd8b7372b3b13b1d8c1fc00e097e242c4f32ea032ca7ce3f0741"
+  },
+  {
+   "part": "a1",
+   "format": "MXFP6",
+   "weight_format": "MXFP6",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__MXFP6.pt",
+   "sha256": "d8fbb44036a4c263a529406cc482964fdc44b3c3d381d8111aa0fcd4e95f779c"
+  },
+  {
+   "part": "a1",
+   "format": "INT4",
+   "weight_format": "INT4",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__INT4.pt",
+   "sha256": "a6a35402a02cd7237a87dca21758578cfaf76891df34c3622d87a9e6d9810d15"
+  },
+  {
+   "part": "a1",
+   "format": "FP4-E2M1",
+   "weight_format": "FP4-E2M1",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__FP4-E2M1.pt",
+   "sha256": "d9099d8545a4ccbcb553f3707dc88162c82116f8237a743331ec2675b4c50a69"
+  },
+  {
+   "part": "a1",
+   "format": "MXFP4",
+   "weight_format": "MXFP4",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__MXFP4.pt",
+   "sha256": "dd467f66187658b426e4b8c3c06a417297e2c0d970c85c9334f20e653a3052e0"
+  },
+  {
+   "part": "a1",
+   "format": "NVFP4",
+   "weight_format": "NVFP4",
+   "act_format": "INT8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a1__NVFP4.pt",
+   "sha256": "1872914875a895af19dc170cc0c7ce7d9284bd2eca3ca56778a2cbd535c65873"
+  },
+  {
+   "part": "a2",
+   "format": "INT32",
+   "weight_format": "INT32",
+   "act_format": "INT32",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__INT32.pt",
+   "sha256": "510a436bc806b34751c95d2fc1e5c6ace283e7c0c288990f30abf9a748753161"
+  },
+  {
+   "part": "a2",
+   "format": "INT16",
+   "weight_format": "INT16",
+   "act_format": "INT16",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__INT16.pt",
+   "sha256": "c62e8db64ac939d3009e7b5f3190d87e0af1eeecca9ce0f9e865f629a54dfb09"
+  },
+  {
+   "part": "a2",
+   "format": "FP16",
+   "weight_format": "FP16",
+   "act_format": "FP16",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__FP16.pt",
+   "sha256": "eb68776b9eb1b2cf92c6d4f25940acc4d04d5da36c607e87682e47004c8a452b"
+  },
+  {
+   "part": "a2",
+   "format": "BF16",
+   "weight_format": "BF16",
+   "act_format": "BF16",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__BF16.pt",
+   "sha256": "83b0ac7e61016c231ff17dd4ddc18610a26b5cff2bc15efbfe9b749ca12e6a20"
+  },
+  {
+   "part": "a2",
+   "format": "FP8-E4M3",
+   "weight_format": "FP8-E4M3",
+   "act_format": "FP8-E4M3",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__FP8-E4M3.pt",
+   "sha256": "a4b1dd3eb813e87894dace40ec651788a154395f4cb821ece1f478201cbf309d"
+  },
+  {
+   "part": "a2",
+   "format": "FP8-E5M2",
+   "weight_format": "FP8-E5M2",
+   "act_format": "FP8-E5M2",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__FP8-E5M2.pt",
+   "sha256": "a4867478bb7a0abd6a6577f1e3baaa668288d5b1aad9dcf20fd4b37e7507aea1"
+  },
+  {
+   "part": "a2",
+   "format": "MXFP8",
+   "weight_format": "MXFP8",
+   "act_format": "MXFP8",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__MXFP8.pt",
+   "sha256": "0d7cdd7f608edd5513e15be52d217323cac885abce7adce5fa7c70485791ae51"
+  },
+  {
+   "part": "a2",
+   "format": "FP6-E2M3",
+   "weight_format": "FP6-E2M3",
+   "act_format": "FP6-E2M3",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__FP6-E2M3.pt",
+   "sha256": "d732078eb9dd78c7eaa084256970410b91e115a5f865f91d18b5f9f65d8ca4bc"
+  },
+  {
+   "part": "a2",
+   "format": "FP6-E3M2",
+   "weight_format": "FP6-E3M2",
+   "act_format": "FP6-E3M2",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__FP6-E3M2.pt",
+   "sha256": "7557d7afec1b3a5146500efecf4bc840c8c9afe77a29ef0874fa8c5fbfaee89e"
+  },
+  {
+   "part": "a2",
+   "format": "MXFP6",
+   "weight_format": "MXFP6",
+   "act_format": "MXFP6",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__MXFP6.pt",
+   "sha256": "d164a542d20df3546bb0e52a14616e932f760ae0469493e7fbd39e0322cecd1a"
+  },
+  {
+   "part": "a2",
+   "format": "INT4",
+   "weight_format": "INT4",
+   "act_format": "INT4",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__INT4.pt",
+   "sha256": "ed61bc0ed9a0a2123200884427a7a1544e3d9b96ecc58491971e5bf9e5a6e36d"
+  },
+  {
+   "part": "a2",
+   "format": "FP4-E2M1",
+   "weight_format": "FP4-E2M1",
+   "act_format": "FP4-E2M1",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__FP4-E2M1.pt",
+   "sha256": "b51b622f4557e10668a92f58ae424eb52ef05b9696ea6e9ba5a079c253fa34ed"
+  },
+  {
+   "part": "a2",
+   "format": "MXFP4",
+   "weight_format": "MXFP4",
+   "act_format": "MXFP4",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__MXFP4.pt",
+   "sha256": "6806e188d129ecde235cec8a0d4131decfcda43df9a9688a82efd61a3db8648c"
+  },
+  {
+   "part": "a2",
+   "format": "NVFP4",
+   "weight_format": "NVFP4",
+   "act_format": "NVFP4",
+   "track_format": "FP16",
+   "file": "kovasznay_hayford__a2__NVFP4.pt",
+   "sha256": "2acc48100b70cddad37183d1b3513a4b1353678d452d8f33fc42b70ab52a7a5b"
+  },
+  {
+   "part": "b",
+   "format": "INT32",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "INT32",
+   "file": "kovasznay_hayford__b__INT32.pt",
+   "sha256": "34547c9cb17b89557911a04b7822d6cfa768de0e8a679cbafd834681e4214949"
+  },
+  {
+   "part": "b",
+   "format": "INT16",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "INT16",
+   "file": "kovasznay_hayford__b__INT16.pt",
+   "sha256": "3593ec5d32b423131c5eebaf9de75ecb9a5b96d8c354637abbbc6e5e7f81e7e8"
+  },
+  {
+   "part": "b",
+   "format": "FP8-E4M3",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "FP8-E4M3",
+   "file": "kovasznay_hayford__b__FP8-E4M3.pt",
+   "sha256": "1fbc50b52328c1480584d73b46b74be2307a9b473bd2da075c771a23e2c3e378"
+  },
+  {
+   "part": "b",
+   "format": "FP8-E5M2",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "FP8-E5M2",
+   "file": "kovasznay_hayford__b__FP8-E5M2.pt",
+   "sha256": "5d2c0f47d956a96b68ef5fb858c6d975f7e70d24446703e9bc75715476410d8c"
+  },
+  {
+   "part": "b",
+   "format": "INT4",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "INT4",
+   "file": "kovasznay_hayford__b__INT4.pt",
+   "sha256": "396c74dc0b10af8d9a12a33c6637095a09935af72a207e603866e7d762862ecd"
+  },
+  {
+   "part": "b",
+   "format": "FP4-E2M1",
+   "weight_format": "INT8",
+   "act_format": "INT8",
+   "track_format": "FP4-E2M1",
+   "file": "kovasznay_hayford__b__FP4-E2M1.pt",
+   "sha256": "ef4f30efbea05b917414ad6d34a3c7b94d43b6a55eabaa17b7b7de8f609e0393"
+  }
+ ]
+}

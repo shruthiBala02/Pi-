@@ -1,5 +1,11 @@
-"""Memory, temperature and environment readings of the Pi. Linux only: a missing source stops with a message, nothing is
-substituted. The parsers take text so they can be tested on recorded samples.
+"""Memory, temperature, power and environment readings of the Pi (exp17's code/pi/sysmon.py, plus the power log of exp25).
+Linux only: a missing source stops with a message, nothing is substituted. The parsers take text so they can be tested
+on samples.
+
+Power: the Pi 5's power chip, `vcgencmd pmic_read_adc`, gives a current (`<RAIL>_A current(n)=...A`) and a voltage
+(`<RAIL>_V volt(n)=...V`) per supply line; the board power is the sum of V x A over the lines that have both. The 5 V
+input lines (EXT5V, USB, HATs) have no current reading, so the sum misses them and reads below a USB meter
+(jfikar/RPi5-power); stated in the tables, no correction applied.
 
 Units: memory in MB = 10^6 bytes (the kernel reports kB = 1024 bytes); clock in Hz.
 Throttle word (`vcgencmd get_throttled`): bits 0-3 are the current state (under-voltage, frequency capped, throttled, soft
@@ -9,7 +15,9 @@ temperature limit); bits 16-19 are the same events having happened since boot an
 from __future__ import annotations
 
 import platform
+import re
 import shutil
+import statistics
 import subprocess
 import threading
 import time
@@ -139,6 +147,127 @@ class ThermalLog:
                 "arm_clock_hz": min(clocks)}
 
 
+_PMIC = re.compile(r"^\s*(\S+)_([AV])\s+(?:current|volt)\(\d+\)=([-+0-9.eE]+)([AV])\s*$")
+
+
+def parse_pmic(text: str) -> dict[str, tuple[float, float]]:
+    """{rail: (volts, amps)} for every supply line of a `vcgencmd pmic_read_adc` text that has both a voltage and a
+    current. Stops when no line has both (the chip was not read, or its output changed)."""
+    volts: dict[str, float] = {}
+    amps: dict[str, float] = {}
+    for line in text.splitlines():
+        m = _PMIC.match(line)
+        if not m:
+            continue
+        rail, kind, value, unit = m.groups()
+        if kind != unit:
+            raise ValueError(f"pmic line with a mismatched unit: {line.strip()!r}")
+        (amps if kind == "A" else volts)[rail] = float(value)
+    both = {r: (volts[r], amps[r]) for r in sorted(set(volts) & set(amps))}
+    if not both:
+        raise ValueError("no supply line with both a voltage and a current in the pmic_read_adc text")
+    return both
+
+
+def read_pmic() -> str:
+    return _vcgencmd("pmic_read_adc")
+
+
+def total_watts(rails: dict[str, tuple[float, float]]) -> float:
+    return sum(v * a for v, a in rails.values())
+
+
+class PowerLog:
+    """Reads the power chip in a thread between start() and stop(), every `interval_s` (0: back to back), each reading
+    tagged with the phase the main thread set (mark()): rows (time_s, phase, {rail: (V, A)}, total W). Every reading
+    must name the same rails as the first; a reading that fails stops the run at stop()."""
+
+    def __init__(self, interval_s: float, reader=None):
+        self.interval = interval_s
+        self.read = reader or read_pmic
+        self.rows: list[tuple] = []
+        self.rails: list[str] = []
+        self.phase = "start"
+        self._stop = threading.Event()
+        self._running = threading.Event()          # cleared while paused: the thread blocks on it (no spinning)
+        self._running.set()
+        self._lock = threading.Lock()              # held while a reading is under way
+        self._thread = None
+        self._t0 = 0.0
+        self.error: Exception | None = None
+
+    def mark(self, phase: str) -> None:
+        self.phase = phase
+
+    def pause(self) -> None:
+        """No readings until resume() (the latency passes are timed without the sampler, as in exp17). Returns once a
+        reading under way has finished; the thread then sleeps on an event, using no CPU."""
+        self._running.clear()
+        with self._lock:
+            pass
+
+    def resume(self) -> None:
+        self._running.set()
+
+    def now(self) -> float:
+        return time.perf_counter() - self._t0
+
+    def _sample(self) -> None:
+        phase = self.phase
+        r = parse_pmic(self.read())
+        if not self.rails:
+            self.rails = list(r)
+        elif list(r) != self.rails:
+            raise ValueError(f"the power chip's lines changed during the run: {list(r)} vs {self.rails}")
+        self.rows.append((round(self.now(), 4), phase, r, total_watts(r)))
+
+    def _loop(self) -> None:
+        try:
+            while not self._stop.wait(self.interval):
+                self._running.wait()                   # blocks while paused
+                with self._lock:
+                    if self._stop.is_set() or not self._running.is_set():
+                        continue
+                    self._sample()
+        except Exception as exc:    # noqa: BLE001  re-raised in stop()
+            self.error = exc
+
+    def start(self) -> None:
+        self._t0 = time.perf_counter()
+        self._sample()
+        self._thread = threading.Thread(target=self._loop, daemon=True)
+        self._thread.start()
+
+    def stop(self) -> None:
+        self._stop.set()
+        self._running.set()                            # wake a paused thread so it can end
+        self._thread.join()
+        if self.error is not None:
+            raise self.error
+
+    def check(self) -> None:
+        """Raise the error a reading in the thread met, if any (else a later step would stop on its symptom)."""
+        if self.error is not None:
+            raise self.error
+
+    def watts(self, phase: str) -> list[float]:
+        """The readings of a phase; raises the thread's reading error first, if there was one."""
+        self.check()
+        return [w for _, p, _, w in self.rows if p == phase]
+
+
+def window_energy(watts: list[float], seconds: float, passes: int, idle_w: float) -> dict:
+    """One energy window: the mean power of its readings x its length / passes, with and without the idle power taken
+    away. A window with no reading stops (no energy is guessed)."""
+    if not watts:
+        raise ValueError("an energy window got no power reading: the window is shorter than the chip's reading interval")
+    if passes <= 0 or seconds <= 0:
+        raise ValueError(f"an energy window needs passes and time ({passes} passes, {seconds} s)")
+    mean_w = statistics.fmean(watts)
+    return {"mean_w": mean_w, "energy_j_per_pass_total": mean_w * seconds / passes,
+            "energy_j_per_pass": (mean_w - idle_w) * seconds / passes, "readings": len(watts)}
+
+
 def env_info() -> dict:
     import numpy
     import torch
@@ -154,6 +283,6 @@ def env_info() -> dict:
         raise RuntimeError("/proc/cpuinfo has no Features or Model line: this is not the Raspberry Pi (arm64 Linux); "
                            "the environment record states the CPU features and is not guessed")
     info["cpu_model"] = model
-    info["asimddp"] = "asimddp" in feats
-    info["asimdhp"] = "asimdhp" in feats
+    for flag in ("asimddp", "i8mm", "asimdhp", "fphp", "bf16"):        # int8 dot / matrix, fp16 vector / scalar, bf16
+        info[flag] = flag in feats
     return info

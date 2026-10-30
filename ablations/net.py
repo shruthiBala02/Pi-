@@ -1,8 +1,14 @@
-"""The rounded INT8 network as the Pi holds it: files written by the desktop export, nothing rounded or trained here.
+"""One row of the exp25 Pi folder: the network as the desktop export wrote it; nothing rounded or trained here.
 
-One checkpoint file = int8 weights + one float32 scale per output row, float32 biases, one float32 activation scale per
-hidden layer. `storage="fp32"` (arms B, C) dequantizes the weights once at load (the simulation: FP32 tensors on the INT8 grid);
-`storage="int8"` (arms D, E) keeps them as int8 and dequantizes one layer at a time.
+A row file holds the weights packed in the row's weight format (`formats.pack`, with their scales; the FP32 row: plain
+float32), float32 biases, one activation scale per hidden layer (scaled value formats only, else none), and one track
+scale per (direction, hidden layer, order) (scaled track formats only, keys "coord/layer/k"). `meta` names the
+equation, seed, part and the three formats.
+
+  fp32      the FP32 row: nothing rounded
+  simulate  every weight decoded to float32 once at load; values and tracks rounded and kept as float32 tensors
+  real      the weights stay packed and one layer is decoded at a time; between layers the value c0 and the tracks are
+            held packed in their formats (jets.py); `matmul_path` says how the value matmul is done
 """
 
 from __future__ import annotations
@@ -11,67 +17,92 @@ import json
 from pathlib import Path
 
 import torch
-import torch.nn.functional as F
+
+import formats as FM
+
+MODES = ("fp32", "simulate", "real")
+MATMUL_PATHS = ("fp32", "int", "int4_unpack_int8", "int16", "fp16", "decode_per_layer")
 
 
-def round_int8(x: torch.Tensor, int8_max: float) -> torch.Tensor:
-    """pinnbench.quantize.formats.round_int8: integers -127..127, ties to even."""
-    return torch.clamp(torch.round(x), -int8_max, int8_max)
+def path_fits(path: str, weight_format: str, act_format: str) -> bool:
+    """Whether the value matmul `path` can run on these weight and value formats."""
+    pair = {weight_format, act_format}
+    if path == "fp32":
+        return pair == {"FP32"}
+    if path == "decode_per_layer":
+        return "FP32" not in pair
+    if path == "int":
+        return pair == {"INT8"}
+    if path == "int4_unpack_int8":
+        return "INT4" in pair and pair <= {"INT4", "INT8"}
+    if path == "int16":
+        return "INT16" in pair and pair <= {"INT4", "INT8", "INT16"}
+    if path == "fp16":
+        return pair == {"FP16"}
+    raise ValueError(f"unknown matmul_path {path!r}")
 
 
-def fake_quant(y: torch.Tensor, scale: torch.Tensor, int8_max: float) -> torch.Tensor:
-    """pinnbench quant_scaled: x / scale rounded onto the integers, times scale (scale is a float32 scalar)."""
-    return round_int8(y / scale, int8_max) * scale
-
-
-TRACK_DTYPES = {"FP16": torch.float16, "BF16": torch.bfloat16}
+def choose_path(weight_format: str, act_format: str, native: dict) -> str:
+    """The value matmul path of a row from the probe's verdict `native` ({"int": bool, "int16": bool, "fp16": bool}):
+    the first native path that fits the formats and the probe found working, else decode_per_layer; FP32: fp32."""
+    if {weight_format, act_format} == {"FP32"}:
+        return "fp32"
+    for path, need in (("int", "int"), ("int4_unpack_int8", "int"), ("int16", "int16"), ("fp16", "fp16")):
+        if native[need] and path_fits(path, weight_format, act_format):
+            return path
+    return "decode_per_layer"
 
 
 class Net:
-    def __init__(self, files: dict, settings: dict, storage: str, int8_max: float):
-        if storage not in ("fp32", "int8"):
-            raise ValueError(f"storage must be fp32 or int8, got {storage!r}")
-        if settings["track_cast"] not in TRACK_DTYPES:
-            raise ValueError(f"unknown track_cast {settings['track_cast']!r}")
-        self.settings, self.storage, self.int8_max = settings, storage, float(int8_max)
-        self.track_dtype = TRACK_DTYPES[settings["track_cast"]]
+    def __init__(self, files: dict, settings: dict, mode: str, cfg: dict, matmul_path: str | None = None):
+        if mode not in MODES:
+            raise ValueError(f"mode must be one of {MODES}, got {mode!r}")
+        meta = files["meta"]
+        self.meta, self.settings, self.mode, self.cfg = meta, settings, mode, cfg
+        self.weight_format, self.act_format, self.track_format = (meta["weight_format"], meta["act_format"],
+                                                                  meta["track_format"])
+        is_fp32 = (self.weight_format, self.act_format, self.track_format) == ("FP32", "FP32", "FP32")
+        if (mode == "fp32") != is_fp32:
+            raise ValueError(f"mode {mode!r} does not fit a row of formats {self.weight_format} / {self.act_format} / "
+                             f"{self.track_format} (the FP32 row runs in mode fp32, every other row in simulate or real)")
+        if mode == "real" and matmul_path not in MATMUL_PATHS:
+            raise ValueError(f"real mode needs a matmul_path from {MATMUL_PATHS}, got {matmul_path!r}")
+        if mode == "real" and not path_fits(matmul_path, self.weight_format, self.act_format):
+            raise ValueError(f"matmul_path {matmul_path!r} cannot run on {self.weight_format} weights with "
+                             f"{self.act_format} values")
+        if mode == "fp32" and matmul_path not in (None, "fp32"):
+            raise ValueError(f"the FP32 row has matmul_path fp32, got {matmul_path!r}")
+        if mode == "simulate" and matmul_path is not None:
+            raise ValueError("simulate mode has no matmul_path (every matmul is float32)")
+        self.matmul_path = "fp32" if mode == "fp32" else matmul_path
         self.tf = settings["input_transform"]
+        self.packed = list(files["weights"])
         self.bias = [b.float() for b in files["bias"]]
-        self.act_scale = [s.float() for s in files["act_scale"]]
-        self.w_scale = [s.float() for s in files["w_scale"]]
         self.n_layers = len(self.bias)
-        self.meta = files["meta"]
-        if storage == "int8":
-            self.w_int8 = [w for w in files["w_int8"]]
-            self.w_f32 = None
-        else:
-            self.w_f32 = [w.float() * s for w, s in zip(files["w_int8"], self.w_scale)]
-            self.w_int8 = None
-            self.w_scale = []    # the scales are folded into the weights and no longer held
-        self._n_params = sum(w.numel() for w in files["w_int8"]) + sum(b.numel() for b in files["bias"])
-        self._n_weights = sum(w.numel() for w in files["w_int8"])
-        self._n_rows = sum(w.shape[0] for w in files["w_int8"])
-
-    # ---- sizes (bytes) ------------------------------------------------------------------------------------
-    def held_weight_bytes(self) -> int:
-        """Bytes of the weight tensors (and their scales) this arm keeps in RAM."""
-        if self.storage == "int8":
-            return sum(w.numel() * w.element_size() for w in self.w_int8) + sum(s.numel() * 4 for s in self.w_scale)
-        return sum(w.numel() * 4 for w in self.w_f32)
-
-    def fp32_equivalent_bytes(self) -> int:
-        return self._n_params * 4
-
-    def int8_network_bytes(self) -> int:
-        """The network as INT8 storage: 1 byte per weight, float32 row scales, biases and activation scales."""
-        return self._n_weights + self._n_rows * 4 + sum(b.numel() for b in self.bias) * 4 + len(self.act_scale) * 4
+        self.act_scale = list(files["act_scale"])
+        self.track_scale = {tuple(int(v) for v in k.split("/")): s for k, s in files["track_scale"].items()}
+        if kind(self.act_format) == "scaled" and len(self.act_scale) != self.n_layers - 1:
+            raise ValueError(f"{self.act_format} values need one scale per hidden layer, the file has {len(self.act_scale)}")
+        if kind(self.track_format) == "scaled" and not self.track_scale:
+            raise ValueError(f"{self.track_format} tracks need their scales, the file has none")
+        self.w_f32 = [self._decode(i) for i in range(self.n_layers)] if mode != "real" else None
+        self._shapes = [tuple(p["shape"]) for p in self.packed]
 
     # ---- pieces -------------------------------------------------------------------------------------------
+    def _decode(self, i: int) -> torch.Tensor:
+        p = self.packed[i]
+        return p["codes"].float() if p["format"] == "FP32" else FM.decode(p)
+
     def weight(self, i: int) -> torch.Tensor:
-        """Layer i's weight as a float32 tensor: the held one (fp32 storage) or a temporary copy dequantized from int8."""
-        if self.storage == "fp32":
-            return self.w_f32[i]
-        return self.w_int8[i].to(torch.float32) * self.w_scale[i]
+        """Layer i's weight as float32: the one decoded at load, or (real) a copy decoded now."""
+        return self.w_f32[i] if self.w_f32 is not None else self._decode(i)
+
+    def weight_int(self, i: int) -> torch.Tensor:
+        """Layer i's integer codes (real mode, integer weight formats): int8 for INT4 / INT8, int16 for INT16."""
+        return FM.int_codes(self.packed[i])
+
+    def weight_row_scale(self, i: int) -> torch.Tensor:
+        return self.packed[i]["scale"]
 
     def transform(self, x: torch.Tensor) -> torch.Tensor:
         """pinnbench nets.InputTransform for the kinds that are affine per coordinate."""
@@ -88,19 +119,28 @@ class Net:
             return (x - _t(self.tf["mu"])) / _t(self.tf["sigma"])
         raise ValueError(f"input transform {kind!r} is not supported (affine kinds only)")
 
-    def act_q(self, y: torch.Tensor, i: int) -> torch.Tensor:
-        return fake_quant(y, self.act_scale[i], self.int8_max)
+    # ---- sizes (bytes) ------------------------------------------------------------------------------------
+    def weights_bytes(self) -> int:
+        """The weights at the format's real storage, scales included (biases not counted)."""
+        return sum(p["codes"].numel() * 4 if p["format"] == "FP32" else FM.stored_bytes(p) for p in self.packed)
 
-    def forward_ste(self, x: torch.Tensor) -> torch.Tensor:
-        """Arm B's forward: F.linear with the rounded weights, tanh, activation rounded with the straight-through form
-        q + (y - y.detach()) of pinnbench QAct, so autograd differentiates through the rounding as the identity."""
-        h = self.transform(x)
-        for i in range(self.n_layers - 1):
-            y = torch.tanh(F.linear(h, self.weight(i), self.bias[i]))
-            with torch.no_grad():
-                q = self.act_q(y, i)
-            h = q + (y - y.detach())
-        return F.linear(h, self.weight(self.n_layers - 1), self.bias[self.n_layers - 1])
+    def held_weight_bytes(self) -> int:
+        """Bytes of the weight tensors (and scales) this mode keeps in RAM."""
+        if self.w_f32 is not None:
+            return sum(w.numel() * 4 for w in self.w_f32)
+        return self.weights_bytes()
+
+    def fp32_equivalent_bytes(self) -> int:
+        return sum(r * c * 4 for r, c in self._shapes) + sum(b.numel() * 4 for b in self.bias)
+
+
+def kind(fmt: str) -> str:
+    """The format's kind (formats.FORMATS), or 'fp32'; an unknown name stops."""
+    if fmt == "FP32":
+        return "fp32"
+    if fmt not in FM.FORMATS:
+        raise ValueError(f"unknown format {fmt!r}")
+    return FM.FORMATS[fmt][0]
 
 
 def _t(v) -> torch.Tensor:
@@ -111,18 +151,18 @@ def load_settings(equation_dir: Path) -> dict:
     return json.loads((equation_dir / "settings.json").read_text(encoding="utf-8"))
 
 
-def ckpt_path(equation_dir: Path, seed: int, rounding: str) -> Path:
-    return equation_dir / f"seed{seed:02d}_{rounding}.pt"
+def row_path(equation_dir: Path, part: str, fmt: str) -> Path:
+    return equation_dir / f"{equation_dir.name}__{part}__{fmt}.pt"
 
 
-def load(equation_dir: Path, seed: int, rounding: str, storage: str, int8_max: float) -> Net:
-    path = ckpt_path(equation_dir, seed, rounding)
+def load(equation_dir: Path, part: str, fmt: str, mode: str, cfg: dict, matmul_path: str | None = None) -> Net:
+    path = row_path(equation_dir, part, fmt)
     if not path.exists():
         raise FileNotFoundError(f"{path} is missing (nothing is rounded or trained on the Pi; copy the export's file here)")
     files = torch.load(path, map_location="cpu", weights_only=True)
     settings = load_settings(equation_dir)
     meta = files["meta"]
-    if (meta["seed"], meta["rounding"], meta["equation"]) != (seed, rounding, settings["equation"]):
-        raise ValueError(f"{path}: the file holds {meta['equation']} seed {meta['seed']} {meta['rounding']}, "
-                         f"asked for {settings['equation']} seed {seed} {rounding}")
-    return Net(files, settings, storage, int8_max)
+    if (meta["equation"], meta["part"], meta["format"]) != (settings["equation"], part, fmt):
+        raise ValueError(f"{path}: the file holds {meta['equation']} {meta['part']} {meta['format']}, "
+                         f"asked for {settings['equation']} {part} {fmt}")
+    return Net(files, settings, mode, cfg, matmul_path)
