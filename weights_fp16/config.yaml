@@ -1,0 +1,37 @@
+# Pi run: the 5 paper equations, weights in INT8 / INT32 / INT16 / FP16 with the value and the derivative tracks in
+# FP16 (jets), against FP32 autograd on the unrounded FP32 network (the baseline). One full-grid inference per pass.
+
+# where the networks are: exp25's Pi folder (ablations/ in this repo), next to this one; nothing is copied or rounded here
+networks_dir: ../ablations
+equations: [burgers_own, kovasznay_hayford, beam_eb_swimpde, black_scholes_bpfree, reaction_rho5_rathore]
+
+# the rows of every equation, in run order (baseline first). file_part / file_format name the row file
+# <equation>__<file_part>__<file_format>.pt in networks_dir; only its weights and biases are used
+rows:
+  - {id: baseline_FP32, method: autograd, file_part: fp32, file_format: FP32, weights: FP32, value: FP32, tracks: FP32}
+  - {id: jets_INT8, method: jets, file_part: base, file_format: INT8, weights: INT8, value: FP16, tracks: FP16}
+  - {id: jets_INT32, method: jets, file_part: a1, file_format: INT32, weights: INT32, value: FP16, tracks: FP16}
+  - {id: jets_INT16, method: jets, file_part: a1, file_format: INT16, weights: INT16, value: FP16, tracks: FP16}
+  - {id: jets_FP16, method: jets, file_part: a1, file_format: FP16, weights: FP16, value: FP16, tracks: FP16}
+
+# 3 of the Pi's 4 cores: the 4th is left to the OS and the temperature logger, so no pass waits on a busy core
+threads: 3
+# runtime: warm-up passes, then `timing_blocks` blocks of `passes_per_block` timed passes with a pause between blocks
+warmup_runs: 3
+timing_blocks: 5
+passes_per_block: 6
+block_pause_s: 2.0
+# memory: the peak memory one inference adds, measured this many times after the warm-up (median kept)
+memory_repeats: 3
+
+# before each row: wait until the CPU is at most `cool_c` degrees (at most `cool_max_wait_s` seconds)
+cool_c: 60.0
+cool_max_wait_s: 300
+thermal_interval_s: 0.5
+throttle_repeats: 1
+
+fp16_probe_rtol: 0.0009765625
+probe_seed: 0
+probe_file: probe_result.json
+results_dir: results
+table_file: final_table.csv
