@@ -1,0 +1,71 @@
+{
+ "equation": "poisson_4holes_pinnacle",
+ "seed": 6,
+ "arm": "C",
+ "rounding": "da_adaround",
+ "matmul_path": "fp32",
+ "n_points": 1246,
+ "rss_after_load_mb": 242.15552,
+ "peak_rss_mb": 259.047424,
+ "working_mb": 16.891903999999982,
+ "weights_bytes_in_ram": 161200,
+ "file_bytes": 51549,
+ "fp32_equivalent_bytes": 163204,
+ "int8_network_bytes": 44328,
+ "errors": [
+  {
+   "column": "u",
+   "order": 0,
+   "error": 0.017458848047088166,
+   "n_points": 1246,
+   "ref_rms": 0.4937393233796264
+  }
+ ],
+ "timing": [
+  {
+   "batch_size": 1,
+   "latency_ms_median": 1.7074160000447591,
+   "latency_ms_q1": 1.7020687499780252,
+   "latency_ms_q3": 1.7163322501119183,
+   "points_per_s": 585.6803497060971
+  },
+  {
+   "batch_size": 64,
+   "latency_ms_median": 2.2965545001625287,
+   "latency_ms_q1": 2.262948750058058,
+   "latency_ms_q3": 2.321369500009496,
+   "points_per_s": 27867.834181801773
+  },
+  {
+   "batch_size": 1024,
+   "latency_ms_median": 15.634009000223159,
+   "latency_ms_q1": 15.597153500152672,
+   "latency_ms_q3": 15.84289474999423,
+   "points_per_s": 65498.23528855481
+  }
+ ],
+ "env": {
+  "machine": "aarch64",
+  "platform": "Linux-6.12.75+rpt-rpi-2712-aarch64-with-glibc2.41",
+  "python": "3.11.9",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.4.2",
+  "torch_threads": 4,
+  "cpu_model": "Raspberry Pi 5 Model B Rev 1.1",
+  "asimddp": true,
+  "asimdhp": true
+ },
+ "threads": 4,
+ "rel_l2_error_u": 0.017458848047088166,
+ "temp_c_start": 45.75,
+ "temp_c_max": 48.5,
+ "temp_c_end": 46.85,
+ "throttled_start": "0x50000",
+ "throttled_end": "0x50000",
+ "throttled": "0x50000",
+ "throttled_any": false,
+ "arm_clock_hz_start": 2400000000,
+ "arm_clock_hz_end": 2400000000,
+ "arm_clock_hz_min": 2400000000,
+ "arm_clock_hz": 2400000000
+}

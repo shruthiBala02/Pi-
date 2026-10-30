@@ -1,0 +1,147 @@
+{
+ "equation": "kovasznay_hayford",
+ "inputs": [
+  "x",
+  "y"
+ ],
+ "outputs": [
+  "u",
+  "v",
+  "p"
+ ],
+ "layers": [
+  2,
+  100,
+  100,
+  100,
+  100,
+  100,
+  3
+ ],
+ "activation": "tanh",
+ "input_transform": {
+  "kind": "none"
+ },
+ "columns": [
+  {
+   "name": "u",
+   "out": 0,
+   "coord": 0,
+   "order": 0
+  },
+  {
+   "name": "v",
+   "out": 1,
+   "coord": 0,
+   "order": 0
+  },
+  {
+   "name": "p",
+   "out": 2,
+   "coord": 0,
+   "order": 0
+  },
+  {
+   "name": "u_x",
+   "out": 0,
+   "coord": 0,
+   "order": 1
+  },
+  {
+   "name": "u_y",
+   "out": 0,
+   "coord": 1,
+   "order": 1
+  },
+  {
+   "name": "v_x",
+   "out": 1,
+   "coord": 0,
+   "order": 1
+  },
+  {
+   "name": "v_y",
+   "out": 1,
+   "coord": 1,
+   "order": 1
+  },
+  {
+   "name": "p_x",
+   "out": 2,
+   "coord": 0,
+   "order": 1
+  },
+  {
+   "name": "u_xx",
+   "out": 0,
+   "coord": 0,
+   "order": 2
+  },
+  {
+   "name": "u_yy",
+   "out": 0,
+   "coord": 1,
+   "order": 2
+  },
+  {
+   "name": "v_xx",
+   "out": 1,
+   "coord": 0,
+   "order": 2
+  },
+  {
+   "name": "v_yy",
+   "out": 1,
+   "coord": 1,
+   "order": 2
+  }
+ ],
+ "no_reference": {
+  "p_y": "reference identically 0 (max |ref| <= 1e-12): relative error undefined"
+ },
+ "format": "INT8",
+ "track_cast": "FP16",
+ "deciding_metric": "rel_l2_component",
+ "median_deciding_value": 0.004247249417235437,
+ "export_device": "cuda",
+ "units": "network units (inputs and outputs as the network sees them)",
+ "seeds": [
+  0,
+  2,
+  17,
+  20,
+  27
+ ],
+ "seed_info": [
+  {
+   "seed": 0,
+   "run_id": "20261006-171035",
+   "deciding_value": 0.004001952689257756,
+   "distance_to_median": 0.0002452967279776806
+  },
+  {
+   "seed": 2,
+   "run_id": "20261006-171035-3",
+   "deciding_value": 0.004108198276115897,
+   "distance_to_median": 0.00013905114111953994
+  },
+  {
+   "seed": 17,
+   "run_id": "20261006-171036-6",
+   "deciding_value": 0.00440396504504985,
+   "distance_to_median": 0.00015671562781441328
+  },
+  {
+   "seed": 20,
+   "run_id": "20261006-171036-9",
+   "deciding_value": 0.004116103783305121,
+   "distance_to_median": 0.00013114563393031627
+  },
+  {
+   "seed": 27,
+   "run_id": "20261006-171037-4",
+   "deciding_value": 0.004378395051165753,
+   "distance_to_median": 0.00013114563393031627
+  }
+ ]
+}

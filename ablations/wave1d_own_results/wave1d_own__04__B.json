@@ -1,0 +1,103 @@
+{
+ "equation": "wave1d_own",
+ "seed": 4,
+ "arm": "B",
+ "rounding": "nearest",
+ "matmul_path": "fp32",
+ "n_points": 25856,
+ "rss_after_load_mb": 242.515968,
+ "peak_rss_mb": 306.70848,
+ "working_mb": 64.19251200000002,
+ "weights_bytes_in_ram": 32480,
+ "file_bytes": 17913,
+ "fp32_equivalent_bytes": 33444,
+ "int8_network_bytes": 10072,
+ "errors": [
+  {
+   "column": "u",
+   "order": 0,
+   "error": 0.30115131367562514,
+   "n_points": 25856,
+   "ref_rms": 0.5606792906967213
+  },
+  {
+   "column": "u_t",
+   "order": 1,
+   "error": 0.05807872950674019,
+   "n_points": 25856,
+   "ref_rms": 2.2060954353684634
+  },
+  {
+   "column": "u_tt",
+   "order": 2,
+   "error": 0.055896847133921256,
+   "n_points": 25856,
+   "ref_rms": 11.067365718951917
+  },
+  {
+   "column": "u_x",
+   "order": 1,
+   "error": 0.11497986701588546,
+   "n_points": 25856,
+   "ref_rms": 2.236767543847045
+  },
+  {
+   "column": "u_xx",
+   "order": 2,
+   "error": 0.058080054029147135,
+   "n_points": 25856,
+   "ref_rms": 11.067365718951917
+  }
+ ],
+ "timing": [
+  {
+   "batch_size": 1,
+   "latency_ms_median": 4.819058500061146,
+   "latency_ms_q1": 4.796883750032066,
+   "latency_ms_q3": 4.849585999977535,
+   "points_per_s": 207.50941288372232
+  },
+  {
+   "batch_size": 64,
+   "latency_ms_median": 5.851628999835157,
+   "latency_ms_q1": 5.836513499730245,
+   "latency_ms_q3": 5.873606250133889,
+   "points_per_s": 10937.125371721773
+  },
+  {
+   "batch_size": 1024,
+   "latency_ms_median": 14.426287999867782,
+   "latency_ms_q1": 14.372363000120458,
+   "latency_ms_q3": 14.468235999856915,
+   "points_per_s": 70981.53038462736
+  }
+ ],
+ "env": {
+  "machine": "aarch64",
+  "platform": "Linux-6.12.75+rpt-rpi-2712-aarch64-with-glibc2.41",
+  "python": "3.11.9",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.4.2",
+  "torch_threads": 4,
+  "cpu_model": "Raspberry Pi 5 Model B Rev 1.1",
+  "asimddp": true,
+  "asimdhp": true
+ },
+ "threads": 4,
+ "rel_l2_error_u": 0.30115131367562514,
+ "deriv_err_u_t": 0.05807872950674019,
+ "deriv_err_u_tt": 0.055896847133921256,
+ "deriv_err_u_x": 0.11497986701588546,
+ "deriv_err_u_xx": 0.058080054029147135,
+ "temp_c_start": 46.85,
+ "temp_c_max": 50.7,
+ "temp_c_end": 50.15,
+ "throttled_start": "0x50000",
+ "throttled_end": "0x50000",
+ "throttled": "0x50000",
+ "throttled_any": false,
+ "arm_clock_hz_start": 2400000000,
+ "arm_clock_hz_end": 2400000000,
+ "arm_clock_hz_min": 2400000000,
+ "arm_clock_hz": 2400000000
+}

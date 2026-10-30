@@ -1,0 +1,99 @@
+{
+ "equation": "wave_beta5_rathore",
+ "inputs": [
+  "x",
+  "t"
+ ],
+ "outputs": [
+  "u"
+ ],
+ "layers": [
+  2,
+  200,
+  200,
+  200,
+  1
+ ],
+ "activation": "tanh",
+ "input_transform": {
+  "kind": "none"
+ },
+ "columns": [
+  {
+   "name": "u",
+   "out": 0,
+   "coord": 0,
+   "order": 0
+  },
+  {
+   "name": "u_t",
+   "out": 0,
+   "coord": 1,
+   "order": 1
+  },
+  {
+   "name": "u_tt",
+   "out": 0,
+   "coord": 1,
+   "order": 2
+  },
+  {
+   "name": "u_x",
+   "out": 0,
+   "coord": 0,
+   "order": 1
+  },
+  {
+   "name": "u_xx",
+   "out": 0,
+   "coord": 0,
+   "order": 2
+  }
+ ],
+ "no_reference": {},
+ "format": "INT8",
+ "track_cast": "FP16",
+ "deciding_metric": "rel_l2",
+ "median_deciding_value": 0.31878421069121937,
+ "export_device": "cuda",
+ "units": "network units (inputs and outputs as the network sees them)",
+ "seeds": [
+  10,
+  13,
+  19,
+  27,
+  28
+ ],
+ "seed_info": [
+  {
+   "seed": 10,
+   "run_id": "20261006-170934-13",
+   "deciding_value": 0.3194461643245803,
+   "distance_to_median": 0.0006619536333609122
+  },
+  {
+   "seed": 13,
+   "run_id": "20261006-170935-2",
+   "deciding_value": 0.33733614960528563,
+   "distance_to_median": 0.018551938914066257
+  },
+  {
+   "seed": 19,
+   "run_id": "20261006-170935-8",
+   "deciding_value": 0.31812225705785846,
+   "distance_to_median": 0.0006619536333609122
+  },
+  {
+   "seed": 27,
+   "run_id": "20261006-170935-16",
+   "deciding_value": 0.3360800837219546,
+   "distance_to_median": 0.01729587303073521
+  },
+  {
+   "seed": 28,
+   "run_id": "20261006-170935-17",
+   "deciding_value": 0.3257353668186829,
+   "distance_to_median": 0.006951156127463554
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "equation": "bl_pe1_nayak",
+ "inputs": [
+  "x"
+ ],
+ "outputs": [
+  "u"
+ ],
+ "layers": [
+  1,
+  64,
+  64,
+  64,
+  64,
+  1
+ ],
+ "activation": "tanh",
+ "input_transform": {
+  "kind": "none"
+ },
+ "columns": [
+  {
+   "name": "u",
+   "out": 0,
+   "coord": 0,
+   "order": 0
+  },
+  {
+   "name": "u_x",
+   "out": 0,
+   "coord": 0,
+   "order": 1
+  },
+  {
+   "name": "u_xx",
+   "out": 0,
+   "coord": 0,
+   "order": 2
+  }
+ ],
+ "no_reference": {},
+ "format": "INT8",
+ "track_cast": "FP16",
+ "deciding_metric": "e_inf_abs",
+ "median_deciding_value": 7.678711482661527e-06,
+ "export_device": "cuda",
+ "units": "network units (inputs and outputs as the network sees them)",
+ "seeds": [
+  2,
+  10,
+  15,
+  23,
+  24
+ ],
+ "seed_info": [
+  {
+   "seed": 2,
+   "run_id": "20261006-171024-6",
+   "deciding_value": 8.041789982260461e-06,
+   "distance_to_median": 3.6307849959893446e-07
+  },
+  {
+   "seed": 10,
+   "run_id": "20261006-171025-4",
+   "deciding_value": 8.827689010781903e-06,
+   "distance_to_median": 1.1489775281203762e-06
+  },
+  {
+   "seed": 15,
+   "run_id": "20261006-171025-9",
+   "deciding_value": 7.315632983062592e-06,
+   "distance_to_median": 3.6307849959893446e-07
+  },
+  {
+   "seed": 23,
+   "run_id": "20261006-171026-4",
+   "deciding_value": 6.65517714582009e-06,
+   "distance_to_median": 1.0235343368414362e-06
+  },
+  {
+   "seed": 24,
+   "run_id": "20261006-171026-5",
+   "deciding_value": 6.824531299409742e-06,
+   "distance_to_median": 8.541801832517848e-07
+  }
+ ]
+}

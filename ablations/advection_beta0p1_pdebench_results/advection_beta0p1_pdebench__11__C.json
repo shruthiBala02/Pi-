@@ -1,0 +1,87 @@
+{
+ "equation": "advection_beta0p1_pdebench",
+ "seed": 11,
+ "arm": "C",
+ "rounding": "da_adaround",
+ "matmul_path": "fp32",
+ "n_points": 20480,
+ "rss_after_load_mb": 242.40128,
+ "peak_rss_mb": 256.32768,
+ "working_mb": 13.926399999999973,
+ "weights_bytes_in_ram": 32480,
+ "file_bytes": 18109,
+ "fp32_equivalent_bytes": 33444,
+ "int8_network_bytes": 10072,
+ "errors": [
+  {
+   "column": "u",
+   "order": 0,
+   "error": 0.013736645017959811,
+   "n_points": 20480,
+   "ref_rms": 0.8504978916219602
+  },
+  {
+   "column": "u_t",
+   "order": 1,
+   "error": 0.026340182889629186,
+   "n_points": 20400,
+   "ref_rms": 0.4490740851294933
+  },
+  {
+   "column": "u_x",
+   "order": 1,
+   "error": 0.02941321447975937,
+   "n_points": 20480,
+   "ref_rms": 4.4967972777323455
+  }
+ ],
+ "timing": [
+  {
+   "batch_size": 1,
+   "latency_ms_median": 4.046869500143657,
+   "latency_ms_q1": 4.036059750205823,
+   "latency_ms_q3": 4.063341749883875,
+   "points_per_s": 247.10458292873088
+  },
+  {
+   "batch_size": 64,
+   "latency_ms_median": 4.612963499994294,
+   "latency_ms_q1": 4.598750499894777,
+   "latency_ms_q3": 4.622889749953174,
+   "points_per_s": 13873.944591167732
+  },
+  {
+   "batch_size": 1024,
+   "latency_ms_median": 10.936052000261043,
+   "latency_ms_q1": 10.910830000057103,
+   "latency_ms_q3": 10.975681499871826,
+   "points_per_s": 93635.25337805244
+  }
+ ],
+ "env": {
+  "machine": "aarch64",
+  "platform": "Linux-6.12.75+rpt-rpi-2712-aarch64-with-glibc2.41",
+  "python": "3.11.9",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.4.2",
+  "torch_threads": 4,
+  "cpu_model": "Raspberry Pi 5 Model B Rev 1.1",
+  "asimddp": true,
+  "asimdhp": true
+ },
+ "threads": 4,
+ "rel_l2_error_u": 0.013736645017959811,
+ "deriv_err_u_t": 0.026340182889629186,
+ "deriv_err_u_x": 0.02941321447975937,
+ "temp_c_start": 47.4,
+ "temp_c_max": 50.7,
+ "temp_c_end": 50.7,
+ "throttled_start": "0x50000",
+ "throttled_end": "0x50000",
+ "throttled": "0x50000",
+ "throttled_any": false,
+ "arm_clock_hz_start": 2400000000,
+ "arm_clock_hz_end": 2400000000,
+ "arm_clock_hz_min": 2400000000,
+ "arm_clock_hz": 2400000000
+}

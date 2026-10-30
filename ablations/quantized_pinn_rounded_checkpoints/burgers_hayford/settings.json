@@ -1,0 +1,79 @@
+{
+ "equation": "burgers_hayford",
+ "inputs": [
+  "x",
+  "t"
+ ],
+ "outputs": [
+  "u"
+ ],
+ "layers": [
+  2,
+  32,
+  32,
+  32,
+  1
+ ],
+ "activation": "tanh",
+ "input_transform": {
+  "kind": "none"
+ },
+ "columns": [
+  {
+   "name": "u",
+   "out": 0,
+   "coord": 0,
+   "order": 0
+  }
+ ],
+ "no_reference": {
+  "u_t": "data reference on a non-periodic grid: no trustworthy derivative reference (spec T2)",
+  "u_x": "data reference on a non-periodic grid: no trustworthy derivative reference (spec T2)",
+  "u_xx": "data reference on a non-periodic grid: no trustworthy derivative reference (spec T2)"
+ },
+ "format": "INT8",
+ "track_cast": "FP16",
+ "deciding_metric": "rel_l2",
+ "median_deciding_value": 0.03618020174556845,
+ "export_device": "cuda",
+ "units": "network units (inputs and outputs as the network sees them)",
+ "seeds": [
+  2,
+  14,
+  16,
+  17,
+  28
+ ],
+ "seed_info": [
+  {
+   "seed": 2,
+   "run_id": "20261006-170913-3",
+   "deciding_value": 0.0356960367233005,
+   "distance_to_median": 0.0004841650222679461
+  },
+  {
+   "seed": 14,
+   "run_id": "20261006-170913-15",
+   "deciding_value": 0.03625080705926332,
+   "distance_to_median": 7.060531369487005e-05
+  },
+  {
+   "seed": 16,
+   "run_id": "20261006-170913-17",
+   "deciding_value": 0.03610959643187357,
+   "distance_to_median": 7.060531369487699e-05
+  },
+  {
+   "seed": 17,
+   "run_id": "20261006-170913-18",
+   "deciding_value": 0.03738918137984647,
+   "distance_to_median": 0.001208979634278018
+  },
+  {
+   "seed": 28,
+   "run_id": "20261006-170914-8",
+   "deciding_value": 0.035628223377670035,
+   "distance_to_median": 0.0005519783678984147
+  }
+ ]
+}

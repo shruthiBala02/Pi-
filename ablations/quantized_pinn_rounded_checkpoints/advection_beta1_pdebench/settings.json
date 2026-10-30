@@ -1,0 +1,86 @@
+{
+ "equation": "advection_beta1_pdebench",
+ "inputs": [
+  "x",
+  "t"
+ ],
+ "outputs": [
+  "u"
+ ],
+ "layers": [
+  2,
+  40,
+  40,
+  40,
+  40,
+  40,
+  40,
+  1
+ ],
+ "activation": "tanh",
+ "input_transform": {
+  "kind": "none"
+ },
+ "columns": [
+  {
+   "name": "u",
+   "out": 0,
+   "coord": 0,
+   "order": 0
+  },
+  {
+   "name": "u_x",
+   "out": 0,
+   "coord": 0,
+   "order": 1
+  }
+ ],
+ "no_reference": {
+  "u_t": "data reference: no trustworthy derivative reference in t (spec T2)"
+ },
+ "format": "INT8",
+ "track_cast": "FP16",
+ "deciding_metric": "nrmse_last_steps",
+ "median_deciding_value": 0.01407569227780512,
+ "export_device": "cuda",
+ "units": "network units (inputs and outputs as the network sees them)",
+ "seeds": [
+  1,
+  2,
+  16,
+  17,
+  23
+ ],
+ "seed_info": [
+  {
+   "seed": 1,
+   "run_id": "20261006-170946-9",
+   "deciding_value": 0.014079857314302885,
+   "distance_to_median": 4.165036497765298e-06
+  },
+  {
+   "seed": 2,
+   "run_id": "20261006-170946-10",
+   "deciding_value": 0.013315532539201041,
+   "distance_to_median": 0.0007601597386040788
+  },
+  {
+   "seed": 16,
+   "run_id": "20261006-170947-10",
+   "deciding_value": 0.014069103052839713,
+   "distance_to_median": 6.589224965406967e-06
+  },
+  {
+   "seed": 17,
+   "run_id": "20261006-170947-11",
+   "deciding_value": 0.014071527241307353,
+   "distance_to_median": 4.165036497767033e-06
+  },
+  {
+   "seed": 23,
+   "run_id": "20261006-170948",
+   "deciding_value": 0.014108224311791292,
+   "distance_to_median": 3.253203398617156e-05
+  }
+ ]
+}

@@ -1,0 +1,111 @@
+{
+ "equation": "heat_multiscale_pinnacle",
+ "seed": 15,
+ "arm": "B",
+ "rounding": "nearest",
+ "matmul_path": "fp32",
+ "n_points": 132651,
+ "rss_after_load_mb": 244.547584,
+ "peak_rss_mb": 339.623936,
+ "working_mb": 95.07635200000001,
+ "weights_bytes_in_ram": 161600,
+ "file_bytes": 51497,
+ "fp32_equivalent_bytes": 163604,
+ "int8_network_bytes": 44428,
+ "errors": [
+  {
+   "column": "u",
+   "order": 0,
+   "error": 0.2100746756604692,
+   "n_points": 132651,
+   "ref_rms": 0.1611020970608437
+  },
+  {
+   "column": "u_t",
+   "order": 1,
+   "error": 0.10832644811427741,
+   "n_points": 132651,
+   "ref_rms": 0.16135986041614062
+  },
+  {
+   "column": "u_x",
+   "order": 1,
+   "error": 0.11240614226761181,
+   "n_points": 132651,
+   "ref_rms": 10.322803831284304
+  },
+  {
+   "column": "u_y",
+   "order": 1,
+   "error": 0.11032142709360536,
+   "n_points": 132651,
+   "ref_rms": 0.5161402595714096
+  },
+  {
+   "column": "u_xx",
+   "order": 2,
+   "error": 0.17090596114773252,
+   "n_points": 132651,
+   "ref_rms": 636.0055864705745
+  },
+  {
+   "column": "u_yy",
+   "order": 2,
+   "error": 0.13445809978750076,
+   "n_points": 132651,
+   "ref_rms": 1.5900139661764303
+  }
+ ],
+ "timing": [
+  {
+   "batch_size": 1,
+   "latency_ms_median": 4.551262499944642,
+   "latency_ms_q1": 4.539799999747629,
+   "latency_ms_q3": 4.577633250278268,
+   "points_per_s": 219.71925372622724
+  },
+  {
+   "batch_size": 64,
+   "latency_ms_median": 6.898791500134394,
+   "latency_ms_q1": 6.861699499950191,
+   "latency_ms_q3": 6.92849924996608,
+   "points_per_s": 9276.98713589956
+  },
+  {
+   "batch_size": 1024,
+   "latency_ms_median": 34.8877320000156,
+   "latency_ms_q1": 34.732132000158344,
+   "latency_ms_q3": 47.79440824995618,
+   "points_per_s": 29351.29173772437
+  }
+ ],
+ "env": {
+  "machine": "aarch64",
+  "platform": "Linux-6.12.75+rpt-rpi-2712-aarch64-with-glibc2.41",
+  "python": "3.11.9",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.4.2",
+  "torch_threads": 4,
+  "cpu_model": "Raspberry Pi 5 Model B Rev 1.1",
+  "asimddp": true,
+  "asimdhp": true
+ },
+ "threads": 4,
+ "rel_l2_error_u": 0.2100746756604692,
+ "deriv_err_u_t": 0.10832644811427741,
+ "deriv_err_u_x": 0.11240614226761181,
+ "deriv_err_u_y": 0.11032142709360536,
+ "deriv_err_u_xx": 0.17090596114773252,
+ "deriv_err_u_yy": 0.13445809978750076,
+ "temp_c_start": 54.0,
+ "temp_c_max": 56.2,
+ "temp_c_end": 55.1,
+ "throttled_start": "0x50000",
+ "throttled_end": "0x50000",
+ "throttled": "0x50000",
+ "throttled_any": false,
+ "arm_clock_hz_start": 2400000000,
+ "arm_clock_hz_end": 2400000000,
+ "arm_clock_hz_min": 2400000000,
+ "arm_clock_hz": 2400000000
+}

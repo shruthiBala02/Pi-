@@ -1,0 +1,106 @@
+{
+ "equation": "burgers_own",
+ "inputs": [
+  "x",
+  "t"
+ ],
+ "outputs": [
+  "u"
+ ],
+ "layers": [
+  2,
+  20,
+  20,
+  20,
+  20,
+  20,
+  20,
+  20,
+  1
+ ],
+ "activation": "tanh",
+ "input_transform": {
+  "kind": "scale_pm1",
+  "lb": [
+   -1.0,
+   0.0
+  ],
+  "ub": [
+   1.0,
+   1.0
+  ],
+  "eps": 1e-08
+ },
+ "columns": [
+  {
+   "name": "u",
+   "out": 0,
+   "coord": 0,
+   "order": 0
+  },
+  {
+   "name": "u_t",
+   "out": 0,
+   "coord": 1,
+   "order": 1
+  },
+  {
+   "name": "u_x",
+   "out": 0,
+   "coord": 0,
+   "order": 1
+  },
+  {
+   "name": "u_xx",
+   "out": 0,
+   "coord": 0,
+   "order": 2
+  }
+ ],
+ "no_reference": {},
+ "format": "INT8",
+ "track_cast": "FP16",
+ "deciding_metric": "rel_l2",
+ "median_deciding_value": 0.0005809404501868128,
+ "export_device": "cuda",
+ "units": "network units (inputs and outputs as the network sees them)",
+ "seeds": [
+  2,
+  5,
+  8,
+  14,
+  17
+ ],
+ "seed_info": [
+  {
+   "seed": 2,
+   "run_id": "20261006-170914-13",
+   "deciding_value": 0.0005387643085462283,
+   "distance_to_median": 4.217614164058446e-05
+  },
+  {
+   "seed": 5,
+   "run_id": "20261006-170914-16",
+   "deciding_value": 0.0006289303527349338,
+   "distance_to_median": 4.7989902548121e-05
+  },
+  {
+   "seed": 8,
+   "run_id": "20261006-170915",
+   "deciding_value": 0.0005722844210473461,
+   "distance_to_median": 8.65602913946667e-06
+  },
+  {
+   "seed": 14,
+   "run_id": "20261006-170915-7",
+   "deciding_value": 0.0006297338592546638,
+   "distance_to_median": 4.879340906785098e-05
+  },
+  {
+   "seed": 17,
+   "run_id": "20261006-170915-10",
+   "deciding_value": 0.0005895964793262796,
+   "distance_to_median": 8.65602913946678e-06
+  }
+ ]
+}

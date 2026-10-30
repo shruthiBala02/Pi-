@@ -1,0 +1,95 @@
+{
+ "equation": "diffreact_nu0p5_rho1_pdebench",
+ "seed": 2,
+ "arm": "B",
+ "rounding": "nearest",
+ "matmul_path": "fp32",
+ "n_points": 20480,
+ "rss_after_load_mb": 242.40128,
+ "peak_rss_mb": 301.367296,
+ "working_mb": 58.966015999999996,
+ "weights_bytes_in_ram": 32480,
+ "file_bytes": 17977,
+ "fp32_equivalent_bytes": 33444,
+ "int8_network_bytes": 10072,
+ "errors": [
+  {
+   "column": "u",
+   "order": 0,
+   "error": 0.17671553605701643,
+   "n_points": 20480,
+   "ref_rms": 0.5663771961210201
+  },
+  {
+   "column": "u_t",
+   "order": 1,
+   "error": 0.374281004785426,
+   "n_points": 20480,
+   "ref_rms": 0.20404230436112936
+  },
+  {
+   "column": "u_x",
+   "order": 1,
+   "error": 704262.9921976274,
+   "n_points": 20480,
+   "ref_rms": 7.511178465217588e-08
+  },
+  {
+   "column": "u_xx",
+   "order": 2,
+   "error": 391631.8712290048,
+   "n_points": 20480,
+   "ref_rms": 4.7194126172256913e-07
+  }
+ ],
+ "timing": [
+  {
+   "batch_size": 1,
+   "latency_ms_median": 3.147921499930817,
+   "latency_ms_q1": 3.1240879999359095,
+   "latency_ms_q3": 3.1553652501088436,
+   "points_per_s": 317.66992919676596
+  },
+  {
+   "batch_size": 64,
+   "latency_ms_median": 3.7820699999429053,
+   "latency_ms_q1": 3.766768749869698,
+   "latency_ms_q3": 3.7898845001791415,
+   "points_per_s": 16921.95014924794
+  },
+  {
+   "batch_size": 1024,
+   "latency_ms_median": 9.914914000091812,
+   "latency_ms_q1": 9.875174499825334,
+   "latency_ms_q3": 9.955316500054323,
+   "points_per_s": 103278.75763627578
+  }
+ ],
+ "env": {
+  "machine": "aarch64",
+  "platform": "Linux-6.12.75+rpt-rpi-2712-aarch64-with-glibc2.41",
+  "python": "3.11.9",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.4.2",
+  "torch_threads": 4,
+  "cpu_model": "Raspberry Pi 5 Model B Rev 1.1",
+  "asimddp": true,
+  "asimdhp": true
+ },
+ "threads": 4,
+ "rel_l2_error_u": 0.17671553605701643,
+ "deriv_err_u_t": 0.374281004785426,
+ "deriv_err_u_x": 704262.9921976274,
+ "deriv_err_u_xx": 391631.8712290048,
+ "temp_c_start": 47.95,
+ "temp_c_max": 49.05,
+ "temp_c_end": 47.95,
+ "throttled_start": "0x50000",
+ "throttled_end": "0x50000",
+ "throttled": "0x50000",
+ "throttled_any": false,
+ "arm_clock_hz_start": 2400000000,
+ "arm_clock_hz_end": 2400000000,
+ "arm_clock_hz_min": 2400000000,
+ "arm_clock_hz": 2400000000
+}
